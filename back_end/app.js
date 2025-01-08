@@ -5,7 +5,6 @@ const userRoutes = require('./routes/userRoutes');
 
 // Загрузка переменных окружения
 dotenv.config();
-app.use('/api', userRoutes);
 
 // Создание экземпляра приложения
 const app = express();
@@ -17,9 +16,13 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('Could not connect to MongoDB', err));
+console.log('MongoDB URI:', process.env.MONGO_URI);
 
 // Middleware для обработки JSON
 app.use(express.json());
+
+// Подключение маршрутов
+app.use('/api', userRoutes);
 
 // Пример маршрута
 app.get('/', (req, res) => {
